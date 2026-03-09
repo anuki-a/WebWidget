@@ -1,0 +1,64 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e26]:
+      - img "[Dev] RBFCU" [ref=e133]
+      - generic [ref=e30]:
+        - combobox "Select Language" [ref=e134]:
+          - option "English" [selected]
+          - option "Spanish"
+        - button "close" [ref=e135] [cursor=pointer]: X
+    - list [ref=e38]:
+      - listitem [ref=e39]:
+        - link "Service" [ref=e136] [cursor=pointer]:
+          - /url: /AppointmentWidget/service?urlCode=MPCDSXKRCD&cby=54745768
+          - generic [ref=e41]: 
+          - generic [ref=e42]: Service
+      - listitem [ref=e44]:
+        - link "Location" [ref=e137] [cursor=pointer]:
+          - /url: /AppointmentWidget/location?urlCode=MPCDSXKRCD&cby=54745768
+          - generic [ref=e138]: 
+          - generic [ref=e139]: Location
+      - listitem [ref=e45]:
+        - link "Meeting Preference":
+          - /url: /AppointmentWidget/?urlCode=MPCDSXKRCD&cby=54745768
+          - generic: 
+          - generic: Meeting Preference
+      - listitem [ref=e46]:
+        - link "Date and Time":
+          - /url: /AppointmentWidget/?urlCode=MPCDSXKRCD&cby=54745768
+          - generic: 
+          - generic: Date and Time
+      - listitem [ref=e47]:
+        - link "Personal Details":
+          - /url: /AppointmentWidget/?urlCode=MPCDSXKRCD&cby=54745768
+          - generic: 
+          - generic: Personal Details
+      - listitem [ref=e48]:
+        - link "Confirmation":
+          - /url: /AppointmentWidget/?urlCode=MPCDSXKRCD&cby=54745768
+          - generic: 
+          - generic: Confirmation
+    - generic [ref=e144]:
+      - heading "Select a Location" [level=1] [ref=e146]
+      - generic [ref=e149]:
+        - generic [ref=e151]:
+          - generic [ref=e152]: Enter city and state, or ZIP Code
+          - textbox "Enter city and state, or ZIP Code" [active] [ref=e153]: "10001"
+          - generic [ref=e163]: We could not find a location based on the information you entered. Please revise your information and search again
+        - generic [ref=e155]:
+          - generic [ref=e156]: Locations
+          - combobox "Locations" [disabled] [ref=e157]:
+            - option "5 Locations"
+            - option "10 Locations"
+            - option "15 Locations"
+            - option "25 Locations"
+            - option "50 Locations"
+    - paragraph [ref=e80]: Powered by FMSI
+  - generic:
+    - generic:
+      - button "Let's talk!" [ref=e162] [cursor=pointer]:
+        - complementary [ref=e85]:
+          - img [ref=e87]
+          - generic [ref=e89]: Let's talk!
+      - alert [ref=e11]
+    - alert [ref=e20]

@@ -105,11 +105,11 @@ You will:
 
 6. **Structure Test Plans**
    - Each scenario must include:
-     - Clear, descriptive title with priority tags.
-     - Detailed step-by-step instructions focusing on "Transitions" (State A to State B).
-     - Expected outcomes (Functional results, not just visual checks).
-     - Assumptions about starting state (always assume blank/fresh state).
-     - Success criteria and failure conditions.
+     - Clear, descriptive title
+     - Detailed step-by-step instructions
+     - Expected outcomes where appropriate
+     - Assumptions about starting state (always assume blank/fresh state)
+     - Success criteria and failure conditions
 
 7. **Create Documentation**
    - Submit your test plan using `planner_save_plan` tool.

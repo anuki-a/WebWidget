@@ -1,0 +1,67 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e7]:
+      - img "[Dev] RBFCU" [ref=e10]
+      - generic [ref=e11]:
+        - combobox "Select Language" [ref=e13]:
+          - option "English" [selected]
+          - option "Spanish"
+        - button "close" [ref=e15] [cursor=pointer]: X
+    - list [ref=e19]:
+      - listitem [ref=e20]:
+        - link "Service" [ref=e21] [cursor=pointer]:
+          - /url: /AppointmentWidget/service?urlCode=MPCDSXKRCD&cby=54745768
+          - generic [ref=e22]: 
+          - generic [ref=e23]: Service
+      - listitem [ref=e25]:
+        - link "Location" [ref=e26] [cursor=pointer]:
+          - /url: /AppointmentWidget/location?urlCode=MPCDSXKRCD&cby=54745768
+          - generic [ref=e27]: 
+          - generic [ref=e28]: Location
+      - listitem [ref=e30]:
+        - link "Meeting Preference":
+          - /url: /AppointmentWidget/?urlCode=MPCDSXKRCD&cby=54745768
+          - generic: 
+          - generic: Meeting Preference
+      - listitem [ref=e31]:
+        - link "Date and Time":
+          - /url: /AppointmentWidget/?urlCode=MPCDSXKRCD&cby=54745768
+          - generic: 
+          - generic: Date and Time
+      - listitem [ref=e32]:
+        - link "Personal Details":
+          - /url: /AppointmentWidget/?urlCode=MPCDSXKRCD&cby=54745768
+          - generic: 
+          - generic: Personal Details
+      - listitem [ref=e33]:
+        - link "Confirmation":
+          - /url: /AppointmentWidget/?urlCode=MPCDSXKRCD&cby=54745768
+          - generic: 
+          - generic: Confirmation
+    - generic [ref=e37]:
+      - heading "Select a Location" [level=1] [ref=e39]
+      - generic [ref=e42]:
+        - generic [ref=e44]:
+          - generic [ref=e45]: Enter city and state, or ZIP Code
+          - textbox "Enter city and state, or ZIP Code" [ref=e46]
+        - generic [ref=e48]:
+          - generic [ref=e49]: Locations
+          - combobox "Locations" [ref=e50]:
+            - option "5 Locations"
+            - option "10 Locations"
+            - option "15 Locations"
+            - option "25 Locations"
+            - option "50 Locations"
+    - paragraph [ref=e58]: Powered by FMSI
+  - generic:
+    - generic:
+      - button "Let's talk!" [ref=e62] [cursor=pointer]:
+        - complementary [ref=e63]:
+          - img [ref=e65]
+          - generic [ref=e67]: Let's talk!
+      - alert [ref=e72]
+    - alert [ref=e81]
+```

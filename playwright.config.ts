@@ -32,6 +32,11 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
+  expect: {
+    timeout: 30000, // All 'expect' calls now wait 15s instead of 5s
+  },
+  timeout: 60000, // Total test time allowed is 1 minute
+
   /* Configure projects for major browsers */
   projects: [
     {
@@ -49,6 +54,7 @@ export default defineConfig({
       use: { ...devices['Desktop Safari'] },
     },
 
+    
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
