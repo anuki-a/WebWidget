@@ -1,99 +1,67 @@
 import { test, expect } from "@playwright/test";
-import { getDateLocator, getWorkingDay } from "./utils/date-helpers";
+import { getWorkingDay } from "./utils/date-helpers";
+import {
+  ServiceSelectionPage,
+  LocationPage,
+  MeetingPreferencePage,
+  DateTimePage,
+  PersonalDetailsPage,
+  ConfirmationPage,
+} from "./pages";
 
 test.describe("Appointment Widget", () => {
   test(
     "Modify appointment time after booking",
     { tag: ["@smoke", "@functional"] },
     async ({ page }) => {
-      // 1. Initial Setup and Navigation
-      await page.goto(
-        "https://ac-qa.fmsidev.us/AppointmentWidget/service?urlCode=MPCDSXKRCD&cby=54745768",
-      );
+      const servicePage = new ServiceSelectionPage(page);
+      const locationPage = new LocationPage(page);
+      const meetingPage = new MeetingPreferencePage(page);
+      const dateTimePage = new DateTimePage(page);
+      const personalDetailsPage = new PersonalDetailsPage(page);
+      const confirmationPage = new ConfirmationPage(page);
 
-      await page.getByRole("button", { name: "Personal Accounts" }).click();
-      await page
-        .getByRole("link", { name: "Update Personal Account  60" })
-        .click();
-      await page
-        .getByRole("button", { name: "No, continue with scheduling" })
-        .click();
-      await page
-        .getByRole("button", { name: "McKinney 2093 N. Central" })
-        .click();
-      await page.getByRole("button", { name: "Meet in Person" }).click();
+      await servicePage.goto();
+      await servicePage.selectCategory("Personal Accounts");
+      await servicePage.selectService("Update Personal Account  60");
+      await servicePage.continueWithScheduling();
 
-      // 2. Select First Working Date (e.g., 3 working days in the future)
-      const initialDate = getWorkingDay(3, "Future");
-      await getDateLocator(page, initialDate).click();
+      await locationPage.selectLocation("McKinney 2093 N. Central");
 
-      // Define time slot locator (re-usable)
-      const getTimeSlot = () =>
-        page
-          .locator("div, span, a, button")
-          .filter({ hasText: /^(?:\d{1,2}:\d{2}\s(?:AM|PM))$/ })
-          .filter({
-            hasNot: page.locator(".disabled, [disabled], .grayed-out"),
-          })
-          .first();
+      await meetingPage.selectMeetInPerson();
 
-      await expect(getTimeSlot()).toBeVisible();
-      await getTimeSlot().click();
+      await dateTimePage.selectWorkingDay(3, "Future");
+      await dateTimePage.selectFirstAvailableTime();
 
-      // 3. Fill customer details and Book
-      await page.getByRole("textbox", { name: "First Name *" }).fill("Jane");
-      await page.getByRole("textbox", { name: "Last Name *" }).fill("Doe");
-      await page
-        .getByRole("textbox", { name: "Email" })
-        .fill("jane.doe@example.com");
-      await page
-        .getByRole("textbox", { name: "Phone No." })
-        .fill("555-987-6543");
-      await page.getByRole("button", { name: "Book My Appointment" }).click();
+      await personalDetailsPage.fillAndSubmit({
+        firstName: "Jane",
+        lastName: "Doe",
+        email: "jane.doe@example.com",
+        phone: "555-987-6543",
+      });
 
-      // 4. Verify initial booking success
-      await expect(
-        page.getByRole("heading", { name: /appointment has been scheduled/i }),
-      ).toBeVisible({ timeout: 20000 });
+      await expect(confirmationPage.confirmationHeading).toBeVisible({
+        timeout: 20000,
+      });
 
-      // 5. Modification Flow
-      await page.getByRole("link", { name: "Edit Date and Time" }).click();
+      await confirmationPage.editDateTime();
 
-      // Select a different working date (e.g., 2 working days in the future)
       const newDate = getWorkingDay(2, "Future");
-      await getDateLocator(page, newDate).click();
+      await dateTimePage.selectDate(newDate);
 
-      // IMPORTANT: Wait for the UI to refresh the time slots for the new date
-      // This prevents capturing the time from the 'previous' date selection
-      await page.waitForTimeout(10000);
+      await dateTimePage.waitForTimeSlotsToLoad(10000);
 
-      // Select a new time and capture it for verification
-      await expect(getTimeSlot()).toBeVisible();
-      const newSelectedTime = (await getTimeSlot().innerText()).trim();
-      await getTimeSlot().click();
+      const newSelectedTime = await dateTimePage.selectFirstAvailableTime();
 
-      // 6. Submit modification
-      await expect(
-        page.getByRole("textbox", { name: "First Name *" }),
-      ).toHaveValue("Jane");
+      await personalDetailsPage.verifyFieldValue("firstName", "Jane");
 
-      await page.getByRole("button", { name: "Book My Appointment" }).click();
+      await personalDetailsPage.submitBooking();
 
-      // Check if the "Already created an appointment" popup appears
-      const duplicatePopup = page.getByText(
-        /You have already booked appointment*/i,
-      );
-      const continueButton = page.getByRole("button", { name: /YES/ });
+      await confirmationPage.handleDuplicateAppointmentPopup();
 
-      // Using a short timeout for the popup check to keep the test fast
-      if (await duplicatePopup.isVisible({ timeout: 5000 })) {
-        await continueButton.click();
-      }
-
-      // 7. Final Verification
-      await expect(
-        page.getByRole("heading", { name: /appointment has been scheduled/i }),
-      ).toBeVisible({ timeout: 20000 });
+      await expect(confirmationPage.confirmationHeading).toBeVisible({
+        timeout: 20000,
+      });
 
       const fullDateString = newDate.toLocaleDateString("en-US", {
         weekday: "long",
@@ -102,7 +70,6 @@ test.describe("Appointment Widget", () => {
         year: "numeric",
       });
 
-      // Verify the new date and time are reflected in the confirmation text
       await expect(page.locator("text=McKinney")).toBeVisible();
       await expect(page.locator(`text=${fullDateString}`)).toBeVisible();
       await expect(page.locator(`text=${newSelectedTime}`)).toBeVisible();
