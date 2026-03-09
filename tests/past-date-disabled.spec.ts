@@ -1,46 +1,32 @@
 import { test, expect } from "@playwright/test";
-import { getDateLocator, getWorkingDay } from "./utils/date-helpers";
+import {
+  ServiceSelectionPage,
+  LocationPage,
+  MeetingPreferencePage,
+  DateTimePage,
+} from "./pages";
 
-// FEATURE: Appointment Widget
 test.describe("Appointment Widget", () => {
-  // Scenario: Calendar edge-case - past date
   test(
     "Prevent selection of past dates in calendar",
     { tag: ["@negative", "@functional"] },
     async ({ page }) => {
-      // Navigate to service selection
-      await page.goto(
-        "https://ac-qa.fmsidev.us/AppointmentWidget/service?urlCode=MPCDSXKRCD&cby=54745768",
-      );
+      const servicePage = new ServiceSelectionPage(page);
+      const locationPage = new LocationPage(page);
+      const meetingPage = new MeetingPreferencePage(page);
+      const dateTimePage = new DateTimePage(page);
 
-      // Select service
-      await page.getByRole("button", { name: "Personal Accounts" }).click();
-      await page
-        .getByRole("link", { name: "Update Personal Account  60" })
-        .click();
-      await page
-        .getByRole("button", { name: "No, continue with scheduling" })
-        .click();
+      await servicePage.goto();
+      await servicePage.selectCategory("Personal Accounts");
+      await servicePage.selectService("Update Personal Account  60");
+      await servicePage.continueWithScheduling();
 
-      // Select location
-      await page
-        .getByRole("button", { name: "McKinney 2093 N. Central" })
-        .click();
+      await locationPage.selectLocation("McKinney 2093 N. Central");
 
-      // Select meeting preference
-      await page.getByRole("button", { name: "Meet in Person" }).click();
+      await meetingPage.selectMeetInPerson();
 
-      // 2. Verify Past Working Days are Disabled (checking last 2)
-      for (const offset of [1, 2]) {
-        const pastDate = getWorkingDay(offset, "Past");
-        await expect(getDateLocator(page, pastDate)).toBeDisabled();
-      }
-
-      // 3. Verify Future Working Days are Enabled (checking next 2)
-      for (const offset of [1, 2]) {
-        const futureDate = getWorkingDay(offset, "Future");
-        await expect(getDateLocator(page, futureDate)).toBeEnabled();
-      }
+      await dateTimePage.verifyPastDatesDisabled([1, 2]);
+      await dateTimePage.verifyFutureDatesEnabled([1, 2]);
     },
   );
 });
