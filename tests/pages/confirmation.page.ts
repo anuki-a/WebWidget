@@ -64,6 +64,17 @@ export class ConfirmationPage extends BasePage {
     await this.waitForElement(cancellationMessage);
   }
 
+  async handleCancellationConfirmationPopup() {
+    const cancellationpopup = this.page.getByText(
+      /You have already booked appointment(s) on this date/i,
+    );
+    const continueButton = this.page.getByRole("button", { name: "Yes" });
+
+    if (await this.isVisible(cancellationpopup, 3000)) {
+      await continueButton.click();
+    }
+  }
+
   async bookAnother() {
     await this.bookAnotherButton.click();
   }

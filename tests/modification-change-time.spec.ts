@@ -26,7 +26,10 @@ test.describe("Appointment Widget", () => {
       await servicePage.selectService("Update Personal Account  60");
       await servicePage.continueWithScheduling();
 
-      await locationPage.selectLocation("McKinney 2093 N. Central");
+      await locationPage.searchSelectLocation(
+        "75071",
+        "McKinney 2093 N. Central",
+      );
 
       await meetingPage.selectMeetInPerson();
 

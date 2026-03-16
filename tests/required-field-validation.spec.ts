@@ -23,7 +23,10 @@ test.describe("Appointment Widget", () => {
       await servicePage.selectServiceByPattern(/Mins/);
       await servicePage.continueWithScheduling();
 
-      await locationPage.selectLocation("McKinney 2093 N. Central");
+      await locationPage.searchSelectLocation(
+        "75071",
+        "McKinney 2093 N. Central",
+      );
 
       await meetingPage.selectMeetInPerson();
 
