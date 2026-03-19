@@ -1,0 +1,44 @@
+{
+  "qa": {
+    "name": "Quality Assurance",
+    "adminPortal": {
+      "url": "https://ac-qa.fmsidev.us",
+      "apiBase": "https://ac-qa.fmsidev.us/api"
+    },
+    "widget": {
+      "url": "https://ac-qa.fmsidev.us/AppointmentWidget/service?urlCode=MPCDSXKRCD&cby=54745768"
+    },
+    "environmentVariables": {
+      "adminUsername": "QA_ADMIN_USER",
+      "adminPassword": "QA_ADMIN_PASS"
+    }
+  },
+  "stg": {
+    "name": "Staging",
+    "adminPortal": {
+      "url": "https://ac-stg.fmsidev.us",
+      "apiBase": "https://ac-stg.fmsidev.us/api"
+    },
+    "widget": {
+      "url": "https://ac-stg.fmsidev.us/AppointmentWidget/service?urlCode=MPCDSXKRCD&cby=54745768"
+    },
+    "environmentVariables": {
+      "adminUsername": "STG_ADMIN_USER",
+      "adminPassword": "STG_ADMIN_PASS"
+    }
+  },
+  "uat": {
+    "name": "User Acceptance Testing",
+    "adminPortal": {
+      "url": "https://ac-uat.fmsidev.us",
+      "apiBase": "https://ac-uat.fmsidev.us/api"
+    },
+    "widget": {
+      "url": "https://ac-uat.fmsidev.us/AppointmentWidget/service?urlCode=MPCDSXKRCD&cby=54745768"
+    },
+    "environmentVariables": {
+      "adminUsername": "UAT_ADMIN_USER",
+      "adminPassword": "UAT_ADMIN_PASS"
+    }
+  }
+}
